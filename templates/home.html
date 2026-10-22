@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+  {% if photo %}<img class="portrait" src="{{ photo }}" alt="Photo of {{ site.author }}" width="112" height="112">{% endif %}
+  <div>
+    <h1>{{ site.title }}</h1>
+    <p class="tagline">{{ site.tagline }}</p>
+  </div>
+</section>
+
+{% if page %}
+<div class="prose">
+  {{ page.html | safe }}
+</div>
+{% endif %}
+
+<section class="home-block" id="connect">
+  <h2>Find me online</h2>
+  {% include "_social.html" %}
+</section>
+
+{% if recent %}
+<section class="home-block">
+  <h2>Recent essays</h2>
+  {% with essays = recent %}{% include "_essay_list.html" %}{% endwith %}
+  <p><a href="{{ url('/essays/') }}">All essays &rarr;</a></p>
+</section>
+{% endif %}
+{% endblock %}

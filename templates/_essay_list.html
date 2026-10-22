@@ -1,0 +1,15 @@
+<ol class="essay-list">
+  {% for e in essays %}
+  <li>
+    <a href="{{ url('/essays/' ~ e.slug ~ '/') }}">
+      <span class="meta">
+        {% if e.date %}<time datetime="{{ e.date.isoformat() }}">{{ e.date | nicedate }}</time> · {% endif %}{{ e.reading_time }} min read
+      </span>
+      <h2>{{ e.title }}</h2>
+      {% if e.summary %}<p>{{ e.summary }}</p>{% endif %}
+    </a>
+  </li>
+  {% else %}
+  <li class="empty">No essays yet. Add a Markdown file to content/essays/.</li>
+  {% endfor %}
+</ol>

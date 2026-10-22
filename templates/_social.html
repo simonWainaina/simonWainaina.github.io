@@ -1,0 +1,9 @@
+{% if social %}
+<ul class="social">
+  {% for label, href in social.items() %}
+  <li><a href="{{ href }}"{% if not href.startswith('mailto:') %} rel="me noopener" target="_blank"{% endif %}>{{ label }}</a></li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="comments-note">Add your profile links under "social" in config.py and they'll appear here.</p>
+{% endif %}

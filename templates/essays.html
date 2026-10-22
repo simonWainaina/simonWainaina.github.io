@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}{{ site.essays_title }} · {{ site.title }}{% endblock %}
+{% block description %}{{ site.essays_intro }}{% endblock %}
+
+{% block content %}
+<section class="intro">
+  <h1>{{ site.essays_title }}</h1>
+  <p class="tagline">{{ site.essays_intro }}</p>
+</section>
+
+{% include "_essay_list.html" %}
+{% endblock %}

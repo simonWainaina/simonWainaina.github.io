@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}{{ essay.title }} · {{ site.title }}{% endblock %}
+{% block description %}{{ essay.summary or site.tagline }}{% endblock %}
+
+{% block content %}
+<article class="essay">
+  <header>
+    <p class="meta">
+      {% if essay.date %}<time datetime="{{ essay.date.isoformat() }}">{{ essay.date | nicedate }}</time> · {% endif %}{{ essay.reading_time }} min read
+    </p>
+    <h1>{{ essay.title }}</h1>
+    {% if essay.summary %}<p class="dek">{{ essay.summary }}</p>{% endif %}
+  </header>
+
+  <div class="prose">
+    {{ essay.html | safe }}
+  </div>
+</article>
+
+<nav class="pager">
+  {% if older %}<a class="older" href="{{ url('/essays/' ~ older.slug ~ '/') }}"><span>Previous</span>{{ older.title }}</a>{% else %}<span></span>{% endif %}
+  {% if newer %}<a class="newer" href="{{ url('/essays/' ~ newer.slug ~ '/') }}"><span>Next</span>{{ newer.title }}</a>{% endif %}
+</nav>
+
+<section class="comments" id="comments">
+  <h2>Comments</h2>
+  {% if site.cusdis_app_id %}
+    <p class="comments-note">Comments are reviewed before they appear. No account needed.</p>
+    <div id="cusdis_thread"
+      data-host="https://cusdis.com"
+      data-app-id="{{ site.cusdis_app_id }}"
+      data-page-id="{{ essay.slug }}"
+      data-page-url="{{ page_url }}"
+      data-page-title="{{ essay.title }}"></div>
+    <script>document.getElementById("cusdis_thread").dataset.theme = window.siteTheme();</script>
+    <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+  {% else %}
+    <p class="comments-note">Comments will appear here once a Cusdis App ID is added in config.py.</p>
+  {% endif %}
+</section>
+{% endblock %}
