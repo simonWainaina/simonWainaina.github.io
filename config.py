@@ -20,7 +20,7 @@ SITE = {
     # Full public address of the site, no trailing slash.
     # GitHub Pages user site: "https://<your-username>.github.io"
     # Custom domain later:    "https://simonwainaina.com"
-    "url": "https://YOUR-USERNAME.github.io",
+    "url": "https://simonwainaina.github.io",
 
     # Leave "" if the site lives at the root of the domain (recommended:
     # name your GitHub repo YOUR-USERNAME.github.io). If you use a repo
