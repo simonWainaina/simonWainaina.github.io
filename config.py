@@ -35,11 +35,11 @@ SITE = {
     # Anything left as "" is hidden. Add new lines for other networks.
     "social": {
         "LinkedIn": "https://www.linkedin.com/in/simon-wainaina-79b6b2222/",
-        "X": "",            # https://x.com/Thinkingcorner0
-        "Instagram": "",    # https://www.instagram.com/simon_wainaina1/reposts/
-        "Substack": "",     # https://substack.com/@simonwainaina1
-        "Medium": "",        # https://medium.com/@simonwainaina810
-        "GitHub": "",       # https://github.com/yourusername
+        "X": "https://x.com/Thinkingcorner0",
+        "Instagram": "https://www.instagram.com/simon_wainaina1/",
+        "Substack": "https://substack.com/@simonwainaina1",
+        "Medium": "https://medium.com/@simonwainaina810",
+        "GitHub": "https://github.com/simonWainaina",
         "Email": "mailto:simonwainaina810@gmail.com",
     },
 

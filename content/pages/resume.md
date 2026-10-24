@@ -82,4 +82,8 @@ Jan 2017 – Apr 2021 · Kenya
 
 ## Skills
 
-Microsoft Excel · Bloomberg Terminal · Stata · Overleaf · Data analysis · Equity and credit research · Investment selection and performance · Consulting
+Python · MATLAB · Stata · Microsoft Excel · Bloomberg Terminal · Overleaf · Data analysis · Equity and credit research · Investment selection and performance · Consulting
+
+## Interests
+
+Chess · Badminton · Soccer · Politics and geopolitics
