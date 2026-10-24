@@ -42,7 +42,7 @@ SITE = {
 
     # Google Search Console: paste the code from the "HTML tag" verification
     # method here (only the content="..." part). Leave "" until you have one.
-    "google_site_verification": "",
+    "google_site_verification": "Ssyp0wM5DKjF2680zxeeOLK-iXYGZ_EILnw-p2g0suY",
 
     # Comments (Cusdis). Paste the App ID from your Cusdis dashboard.
     # Leave empty to hide the comment box.
