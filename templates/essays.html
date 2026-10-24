@@ -9,5 +9,17 @@
   <p class="tagline">{{ site.essays_intro }}</p>
 </section>
 
+{% set handles = site.essays_handles | default([]) | select("in", social) | list %}
+{% if handles %}
+<section class="handles">
+  <p>{{ site.essays_handles_intro }}</p>
+  <ul class="social">
+    {% for label in handles %}
+    <li><a href="{{ social[label] }}" rel="me noopener" target="_blank">{{ label }}</a></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
 {% include "_essay_list.html" %}
 {% endblock %}

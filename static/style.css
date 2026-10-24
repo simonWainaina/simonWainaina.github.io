@@ -176,6 +176,28 @@ main { padding: 0 0.8rem 2.5rem; }
 .essay-list .empty { color: var(--muted); padding: 1rem 0; }
 .intro + .essay-list { margin-top: 0.5rem; }
 
+/* "Find more of my work" links on the Essays page */
+.handles { margin: 0 0 2rem; padding: 1rem 1.1rem; border: 1px solid var(--rule); border-radius: 6px; }
+.handles p { margin: 0 0 0.8rem; font-size: 0.98rem; }
+
+/* Bar charts inside essays (see content/essays/fed-rates-east-africa.md) */
+.chart { margin: 2.2rem 0; padding: 1.2rem 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.chart figcaption strong { display: block; font-size: 1.15rem; line-height: 1.3; }
+.chart figcaption span, .chart-source, .chart-legend, .bar-label, .bar-value { font-family: var(--sans); }
+.chart figcaption span { display: block; font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+.chart-legend { list-style: none; display: flex; flex-wrap: wrap; gap: 1rem; padding: 0; margin: 0.9rem 0 0.6rem; font-size: 0.72rem; color: var(--muted); }
+.chart-legend i { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 2px; margin-right: 0.35rem; vertical-align: -0.05rem; }
+.bar-row { display: grid; grid-template-columns: 4.6rem 1fr; align-items: center; gap: 0.6rem; padding: 0.3rem 0; }
+.bar-label { font-size: 0.8rem; text-align: right; }
+.bar-area { display: flex; flex-wrap: wrap; align-items: center; gap: 0.15rem 0.5rem; border-left: 1px solid var(--rule); }
+.bar { display: block; height: 1.15rem; min-width: 4px; border-radius: 0 4px 4px 0; }
+.bar-value { font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+.bar-value b { color: var(--text); font-weight: 500; font-size: 0.8rem; margin-right: 0.2rem; }
+.hike { background: var(--accent); }
+.held { background: var(--muted); opacity: 0.55; }
+.fed { background: var(--text); }
+.chart-source { font-size: 0.66rem; line-height: 1.5; color: var(--muted); margin: 0.9rem 0 0; }
+
 .meta {
   font-family: var(--sans);
   font-size: 0.68rem;

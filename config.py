@@ -17,6 +17,11 @@ SITE = {
     "essays_title": "Essays",
     "essays_intro": "Essays on money, everyday economics, and occasional personal reflective pieces.",
 
+    # Shown on the Essays page, above the list: where else to read your work.
+    # Names must match entries under "social" below.
+    "essays_handles_intro": "Some of my handles go by the name Corner Thoughts. To interact with more of my essays and work, please see these handles:",
+    "essays_handles": ["Facebook", "Medium", "Substack"],
+
     # Full public address of the site, no trailing slash.
     # GitHub Pages user site: "https://<your-username>.github.io"
     # Custom domain later:    "https://simonwainaina.com"
@@ -35,6 +40,7 @@ SITE = {
     # Anything left as "" is hidden. Add new lines for other networks.
     "social": {
         "LinkedIn": "https://www.linkedin.com/in/simon-wainaina-79b6b2222/",
+        "Facebook": "https://www.facebook.com/profile.php?id=61591318871935",
         "X": "https://x.com/Thinkingcorner0",
         "Instagram": "https://www.instagram.com/simon_wainaina1/",
         "Substack": "https://substack.com/@simonwainaina1",
