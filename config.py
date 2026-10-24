@@ -49,6 +49,41 @@ SITE = {
         "Email": "mailto:simonwainaina810@gmail.com",
     },
 
+    # Headlines on the More page, refreshed every time the site is built
+    # (GitHub rebuilds it every morning and evening). Each feed is
+    # ("Name shown on the site", "RSS feed address"). Remove a line to drop
+    # a source; a source that's down is simply skipped.
+    "news": {
+        "page": "more",
+        "per_section": 6,      # stories shown per section
+        "per_source": 2,       # at most this many from any one outlet
+        "max_age_days": 3,     # ignore anything older
+        "skip_links_containing": ["/lifestyle/", "/life-and-style/", "/sport", "/entertainment/"],
+        "sections": [
+            {"title": "Kenya: business & finance", "feeds": [
+                ("Business Daily", "https://www.businessdailyafrica.com/service/rss/bd/1939132/feed.rss"),
+                ("The Standard", "https://www.standardmedia.co.ke/rss/business.php"),
+                ("Capital FM", "https://www.capitalfm.co.ke/business/feed/"),
+            ]},
+            {"title": "Kenya: politics & current affairs", "feeds": [
+                ("The Standard", "https://www.standardmedia.co.ke/rss/politics.php"),
+                ("Daily Nation", "https://nation.africa/kenya/rss.xml"),
+                ("Capital FM", "https://www.capitalfm.co.ke/news/feed/"),
+            ]},
+            {"title": "World: business & finance", "feeds": [
+                ("Financial Times", "https://www.ft.com/global-economy?format=rss"),
+                ("CNBC", "https://www.cnbc.com/id/100727362/device/rss/rss.html"),
+                ("The Guardian", "https://www.theguardian.com/business/economics/rss"),
+            ]},
+            {"title": "World: politics & geopolitics", "feeds": [
+                ("BBC", "https://feeds.bbci.co.uk/news/world/rss.xml"),
+                ("Al Jazeera", "https://www.aljazeera.com/xml/rss/all.xml"),
+                ("The Guardian", "https://www.theguardian.com/world/rss"),
+                ("NPR", "https://feeds.npr.org/1014/rss.xml"),
+            ]},
+        ],
+    },
+
     # Top menu, in this order: (label, path).
     # To add a section later (e.g. Projects): create content/pages/projects.md,
     # then add ("Projects", "/projects/") below.

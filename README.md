@@ -79,7 +79,15 @@ In `config.py`, fill in the full address of each profile under `"social"` (for e
 1. Create a file such as `content/pages/projects.md` (starting with `title: Projects`, a blank line, then the text).
 2. In `config.py`, add `("Projects", "/projects/")` to `"nav"` where you want it in the menu.
 
-## 8. Optional extras
+## 8. News headlines on the More page
+
+Every build pulls the latest headlines from news outlets' RSS feeds (Business Daily, The Standard, Daily Nation, Capital FM, Financial Times, CNBC, The Guardian, BBC, Al Jazeera, NPR) into four sections: Kenyan and world business, and Kenyan and world politics. GitHub rebuilds the site at 6 a.m. and 6 p.m. Nairobi time, so the list stays current on its own.
+
+- To add, remove or swap a source, edit `"news"` in `config.py`. Each line is a name and the outlet's RSS address.
+- If an outlet's feed is down, it's skipped and the rest still show.
+- GitHub pauses scheduled rebuilds if the repository has no pushes for 60 days. It emails you first; click the link (or push any change) to keep them running.
+
+## 9. Optional extras
 
 - **Your own domain** (e.g. `simonwainaina.com`, about $10–15/year): buy it from a registrar, add it under Settings → Pages → Custom domain, follow GitHub's DNS instructions, then update `"url"` in `config.py`.
 - **PDF résumé:** put `resume.pdf` in `static/`; the résumé page already links to it.

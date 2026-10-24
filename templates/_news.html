@@ -1,0 +1,23 @@
+<section class="news" id="news">
+  <h2>In the news</h2>
+  <p class="news-note">
+    Top business, finance and political stories from Kenyan and international outlets, updated
+    <time datetime="{{ news.updated.isoformat() }}">{{ news.updated | newsdate }}</time> (Nairobi time).
+    Summaries are the publishers' own; follow a headline to read the full story.
+  </p>
+
+  {% for section in news.sections if section.stories %}
+  <div class="news-section">
+    <h3>{{ section.title }}</h3>
+    <ol class="news-list">
+      {% for st in section.stories %}
+      <li>
+        <span class="meta">{{ st.source }} · <time datetime="{{ st.when.isoformat() }}">{{ st.when | newsdate }}</time></span>
+        <a href="{{ st.link }}" target="_blank" rel="noopener">{{ st.title }}</a>
+        {% if st.summary %}<p>{{ st.summary }}</p>{% endif %}
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+  {% endfor %}
+</section>

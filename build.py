@@ -17,11 +17,15 @@ Each file starts with a few "key: value" lines, a blank line, then Markdown:
     Your essay text here...
 """
 
+import html
 import re
 import shutil
 import sys
-from datetime import date, datetime
-from email.utils import format_datetime
+import urllib.request
+import xml.etree.ElementTree as ET
+from concurrent.futures import ThreadPoolExecutor
+from datetime import date, datetime, timedelta, timezone
+from email.utils import format_datetime, parsedate_to_datetime
 from pathlib import Path
 from xml.sax.saxutils import escape
 
@@ -92,6 +96,92 @@ def rss(essays):
     )
 
 
+NAIROBI = timezone(timedelta(hours=3))
+
+
+def fetch_feed(source, url):
+    """Read one RSS feed and return its stories as dicts. Returns [] on any failure."""
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (compatible; SimonWainainaSite/1.0)"})
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            root = ET.fromstring(resp.read())
+    except Exception as err:
+        print(f"Note: could not load news from {source} ({err.__class__.__name__}).")
+        return []
+
+    stories = []
+    for item in root.iter("item"):
+        title = html.unescape(item.findtext("title") or "").strip()
+        link = (item.findtext("link") or "").strip()
+        if not title or not link:
+            continue
+        try:
+            when = parsedate_to_datetime(item.findtext("pubDate") or "")
+        except (TypeError, ValueError):
+            continue
+        if when.tzinfo is None:
+            when = when.replace(tzinfo=timezone.utc)
+        summary = (item.findtext("description") or "").split("</p>")[0]  # first paragraph only
+        summary = re.sub(r"<[^>]+>", " ", summary)
+        summary = re.sub(r"\s+", " ", html.unescape(summary)).strip()
+        summary = re.sub(r"^[A-Z][A-Za-z ,]+, \w{3} \d{1,2} [–-] ", "", summary)  # "NAIROBI, Kenya, Oct 24 – "
+        stories.append({
+            "source": source,
+            "title": title,
+            "link": re.sub(r"\?(utm|at)_[^#]*", "", link),  # drop tracking tags
+            "summary": summary,
+            "when": when,
+        })
+    return stories
+
+
+def shorten(text, limit=220):
+    if len(text) <= limit:
+        return text
+    return text[:limit].rsplit(" ", 1)[0].rstrip(",;:") + "…"
+
+
+def same_story(a, b):
+    """True if two headlines share most of their key words (same event, different outlet)."""
+    words = lambda t: {w for w in re.findall(r"[a-z0-9]+", t.lower()) if len(w) > 3}
+    wa, wb = words(a), words(b)
+    return bool(wa and wb) and len(wa & wb) >= 0.5 * min(len(wa), len(wb))
+
+
+def fetch_news(settings):
+    """Latest headlines for each news section, newest first, a few per source."""
+    feeds = [(s, f) for s in settings["sections"] for f in s["feeds"]]
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        results = list(pool.map(lambda sf: fetch_feed(*sf[1]), feeds))
+
+    cutoff = datetime.now(timezone.utc) - timedelta(days=settings.get("max_age_days", 3))
+    skip = settings.get("skip_links_containing", [])
+    per_section = settings.get("per_section", 6)
+    per_source = settings.get("per_source", 2)
+
+    sections = []
+    for section in settings["sections"]:
+        candidates = [st for (s, _), res in zip(feeds, results) if s is section for st in res]
+        candidates.sort(key=lambda st: st["when"], reverse=True)
+        picked, count = [], {}
+        for st in candidates:
+            if (st["when"] < cutoff or count.get(st["source"], 0) >= per_source
+                    or any(s in st["link"] for s in skip)
+                    or any(same_story(st["title"], p["title"]) for p in picked)):
+                continue
+            count[st["source"]] = count.get(st["source"], 0) + 1
+            st["summary"] = shorten(st["summary"])
+            st["when"] = st["when"].astimezone(NAIROBI)
+            picked.append(st)
+            if len(picked) == per_section:
+                break
+        sections.append({"title": section["title"], "stories": picked})
+
+    if not any(s["stories"] for s in sections):
+        return None
+    return {"sections": sections, "updated": datetime.now(NAIROBI)}
+
+
 def build():
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
@@ -101,6 +191,7 @@ def build():
     base = SITE["base_path"]
     env.globals.update(site=SITE, year=date.today().year, url=lambda p: base + p)
     env.filters["nicedate"] = lambda d: f"{d.day} {d.strftime('%B %Y')}"
+    env.filters["newsdate"] = lambda d: f"{d.day} {d.strftime('%b')}, {d.strftime('%H:%M')}"
 
     essays = sorted(load("essays"), key=lambda e: e.get("date", date.min), reverse=True)
     pages = load("pages")
@@ -131,11 +222,17 @@ def build():
               essay_tpl.render(essay=e, newer=newer, older=older, page_url=page_url, current="/essays/"))
 
     # Every other page in content/pages/ gets its own address, e.g. /resume/.
+    # The news page (see "news" in config.py) also gets today's headlines.
+    news_settings = SITE.get("news")
+    news_page = news_settings and news_settings.get("page")
+    news = fetch_news(news_settings) if any(p["slug"] == news_page for p in pages) else None
+
     page_tpl = env.get_template("page.html")
     for p in pages:
         if p["slug"] == "about":
             continue
-        write(f"{p['slug']}/index.html", page_tpl.render(page=p, current=f"/{p['slug']}/"))
+        write(f"{p['slug']}/index.html", page_tpl.render(
+            page=p, current=f"/{p['slug']}/", news=news if p["slug"] == news_page else None))
 
     write("404.html", env.get_template("404.html").render(current=None))
     write("feed.xml", rss(essays))

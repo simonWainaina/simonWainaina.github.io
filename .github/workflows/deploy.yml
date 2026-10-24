@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    # Rebuild twice a day so the headlines on the More page stay fresh:
+    # 03:00 and 15:00 UTC = 6 a.m. and 6 p.m. in Nairobi.
+    - cron: "0 3,15 * * *"
 
 permissions:
   contents: read

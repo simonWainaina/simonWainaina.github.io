@@ -8,5 +8,6 @@
   <div class="prose">
     {{ page.html | safe }}
   </div>
+  {% if news %}{% include "_news.html" %}{% endif %}
 </article>
 {% endblock %}
