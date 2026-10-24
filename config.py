@@ -25,12 +25,24 @@ SITE = {
     # Full public address of the site, no trailing slash.
     # GitHub Pages user site: "https://<your-username>.github.io"
     # Custom domain later:    "https://simonwainaina.com"
-    "url": "https://SimonWainaina.github.io",
+    "url": "https://simonwainaina.github.io",
 
     # Leave "" if the site lives at the root of the domain (recommended:
     # name your GitHub repo YOUR-USERNAME.github.io). If you use a repo
     # like "website", set this to "/website".
     "base_path": "",
+
+    # Helps search engines understand who the site is about (shown to Google,
+    # not on the page). Your social links below are added automatically.
+    "person": {
+        "job_title": "Investment Analyst Intern",
+        "works_for": "Haba Capital",
+        "alumni_of": "Williams College",
+    },
+
+    # Google Search Console: paste the code from the "HTML tag" verification
+    # method here (only the content="..." part). Leave "" until you have one.
+    "google_site_verification": "",
 
     # Comments (Cusdis). Paste the App ID from your Cusdis dashboard.
     # Leave empty to hide the comment box.

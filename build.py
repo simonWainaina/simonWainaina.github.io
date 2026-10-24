@@ -18,6 +18,7 @@ Each file starts with a few "key: value" lines, a blank line, then Markdown:
 """
 
 import html
+import json
 import re
 import shutil
 import sys
@@ -202,6 +203,7 @@ def build():
 
     social = {k: v for k, v in SITE.get("social", {}).items() if v}
     env.globals["social"] = social
+    site_root = SITE["url"] + base
 
     # Profile picture: only shown if the file is actually in static/.
     photo = SITE.get("photo", "")
@@ -209,21 +211,43 @@ def build():
     if photo and not env.globals["photo"]:
         print(f"Note: no profile picture yet - add static/{photo} to show one.")
 
+    sitemap = []  # (path, last changed) for every public page
+
+    def render(template, path, lastmod=None, **context):
+        """Render a template to path/index.html and list it in the sitemap."""
+        write(path.lstrip("/") + "index.html", env.get_template(template).render(path=path, **context))
+        sitemap.append((path, lastmod))
+
     # Home page = About page, with recent essays and social links underneath.
     about = next((p for p in pages if p["slug"] == "about"), None)
-    write("index.html", env.get_template("home.html").render(
-        page=about, recent=essays[:3], current="/"))
+    person = {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": SITE["author"],
+        "url": site_root + "/",
+        "sameAs": [v for v in social.values() if v.startswith("http")],
+    }
+    if env.globals["photo"]:
+        person["image"] = SITE["url"] + env.globals["photo"]
+    details = SITE.get("person", {})
+    if details.get("job_title"):
+        person["jobTitle"] = details["job_title"]
+    if details.get("works_for"):
+        person["worksFor"] = {"@type": "Organization", "name": details["works_for"]}
+    if details.get("alumni_of"):
+        person["alumniOf"] = {"@type": "CollegeOrUniversity", "name": details["alumni_of"]}
+    render("home.html", "/", page=about, recent=essays[:3], current="/",
+           person_json=json.dumps(person, ensure_ascii=False).replace("</", "<\\/"))
 
-    write("essays/index.html", env.get_template("essays.html").render(
-        essays=essays, current="/essays/"))
+    render("essays.html", "/essays/", essays=essays, current="/essays/")
 
     essay_tpl = env.get_template("essay.html")
     for i, e in enumerate(essays):
         newer = essays[i - 1] if i > 0 else None
         older = essays[i + 1] if i + 1 < len(essays) else None
-        page_url = f"{SITE['url']}{base}/essays/{e['slug']}/"
-        write(f"essays/{e['slug']}/index.html",
-              essay_tpl.render(essay=e, newer=newer, older=older, page_url=page_url, current="/essays/"))
+        path = f"/essays/{e['slug']}/"
+        render("essay.html", path, lastmod=e.get("date"), essay=e, newer=newer, older=older,
+               page_url=site_root + path, current="/essays/")
 
     # Every other page in content/pages/ gets its own address, e.g. /resume/.
     # The news page (see "news" in config.py) also gets today's headlines.
@@ -231,15 +255,22 @@ def build():
     news_page = news_settings and news_settings.get("page")
     news = fetch_news(news_settings) if any(p["slug"] == news_page for p in pages) else None
 
-    page_tpl = env.get_template("page.html")
     for p in pages:
         if p["slug"] == "about":
             continue
-        write(f"{p['slug']}/index.html", page_tpl.render(
-            page=p, current=f"/{p['slug']}/", news=news if p["slug"] == news_page else None))
+        path = f"/{p['slug']}/"
+        render("page.html", path, page=p, current=path, news=news if p["slug"] == news_page else None)
 
     write("404.html", env.get_template("404.html").render(current=None))
     write("feed.xml", rss(essays))
+
+    # Sitemap and robots.txt tell search engines which pages exist.
+    urls = "".join(
+        f"<url><loc>{site_root}{path}</loc>" + (f"<lastmod>{when.isoformat()}</lastmod>" if when else "") + "</url>"
+        for path, when in sitemap)
+    write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n'
+          f'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>\n')
+    write("robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {site_root}/sitemap.xml\n")
     (OUTPUT / ".nojekyll").touch()  # tells GitHub Pages to serve files as-is
 
     print(f"Built {len(essays)} essays and {len(pages)} pages into {OUTPUT}/")

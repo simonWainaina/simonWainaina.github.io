@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block head %}
+  <script type="application/ld+json">{{ person_json | safe }}</script>
+{% endblock %}
+
 {% block content %}
 <section class="hero">
   {% if photo %}<img class="portrait" src="{{ photo }}" alt="Photo of {{ site.author }}" width="112" height="112">{% endif %}

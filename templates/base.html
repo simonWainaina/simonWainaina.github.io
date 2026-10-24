@@ -9,6 +9,16 @@
   <meta property="og:title" content="{{ self.title() }}">
   <meta property="og:description" content="{{ self.description() }}">
   {% if photo %}<meta property="og:image" content="{{ site.url }}{{ photo }}">{% endif %}
+  {% if path %}
+  <link rel="canonical" href="{{ site.url }}{{ url(path) }}">
+  <meta property="og:url" content="{{ site.url }}{{ url(path) }}">
+  {% else %}
+  <meta name="robots" content="noindex">
+  {% endif %}
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta name="twitter:card" content="summary">
+  {% if site.google_site_verification %}<meta name="google-site-verification" content="{{ site.google_site_verification }}">{% endif %}
+  {% block head %}{% endblock %}
   <script>
     // Apply the saved colour scheme before the page draws, so it never flashes.
     window.siteTheme = function () {

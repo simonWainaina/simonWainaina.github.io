@@ -2,6 +2,11 @@
 
 {% block title %}{{ essay.title }} · {{ site.title }}{% endblock %}
 {% block description %}{{ essay.summary or site.tagline }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block head %}
+  {% if essay.date %}<meta property="article:published_time" content="{{ essay.date.isoformat() }}">{% endif %}
+  <meta property="article:author" content="{{ site.author }}">
+{% endblock %}
 
 {% block content %}
 <article class="essay">
