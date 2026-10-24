@@ -190,6 +190,7 @@ def build():
     env = Environment(loader=FileSystemLoader(TEMPLATES), autoescape=select_autoescape(["html"]))
     base = SITE["base_path"]
     env.globals.update(site=SITE, year=date.today().year, url=lambda p: base + p)
+    env.globals["build_id"] = datetime.now().strftime("%Y%m%d%H%M")  # makes browsers fetch fresh CSS
     env.filters["nicedate"] = lambda d: f"{d.day} {d.strftime('%B %Y')}"
     env.filters["newsdate"] = lambda d: f"{d.day} {d.strftime('%b')}, {d.strftime('%H:%M')}"
 
