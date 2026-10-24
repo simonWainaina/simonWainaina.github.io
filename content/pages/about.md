@@ -1,3 +1,3 @@
 title: About
 
-I study Economics and Mathematics at Williams College and I'm a KenSAP scholar. This year I'm on leave from Williams and working in Nairobi as an analyst at Haba Capital, which provides invoice- and purchase-order-backed working capital to small and growing businesses in Kenya.
+I study Economics and Mathematics at Williams College and I'm a KenSAP scholar. This year I'm on leave from Williams and working in Nairobi as an analyst at [Haba Capital](https://www.habacapital.com/).
