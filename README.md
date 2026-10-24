@@ -79,9 +79,9 @@ In `config.py`, fill in the full address of each profile under `"social"` (for e
 1. Create a file such as `content/pages/projects.md` (starting with `title: Projects`, a blank line, then the text).
 2. In `config.py`, add `("Projects", "/projects/")` to `"nav"` where you want it in the menu.
 
-## 8. News headlines on the More page
+## 8. In the News page
 
-Every build pulls the latest headlines from news outlets' RSS feeds (Business Daily, The Standard, Daily Nation, Capital FM, Financial Times, CNBC, The Guardian, BBC, Al Jazeera, NPR) into four sections: Kenyan and world business, and Kenyan and world politics. GitHub rebuilds the site at 6 a.m. and 6 p.m. Nairobi time, so the list stays current on its own.
+Every build pulls the latest headlines from news outlets' RSS feeds (Kenyan, African and international outlets) into six sections: business & finance and politics for Kenya, Africa and the world. The page lives at `content/pages/news.md`. GitHub rebuilds the site at 6 a.m. and 6 p.m. Nairobi time, so the list stays current on its own.
 
 - To add, remove or swap a source, edit `"news"` in `config.py`. Each line is a name and the outlet's RSS address.
 - If an outlet's feed is down, it's skipped and the rest still show.

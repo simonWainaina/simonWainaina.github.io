@@ -49,16 +49,16 @@ SITE = {
         "Email": "mailto:simonwainaina810@gmail.com",
     },
 
-    # Headlines on the More page, refreshed every time the site is built
+    # Headlines on the In the News page, refreshed every time the site is built
     # (GitHub rebuilds it every morning and evening). Each feed is
     # ("Name shown on the site", "RSS feed address"). Remove a line to drop
     # a source; a source that's down is simply skipped.
     "news": {
-        "page": "more",
+        "page": "news",
         "per_section": 6,      # stories shown per section
         "per_source": 2,       # at most this many from any one outlet
         "max_age_days": 3,     # ignore anything older
-        "skip_links_containing": ["/lifestyle/", "/life-and-style/", "/sport", "/entertainment/"],
+        "skip_links_containing": ["/lifestyle/", "/life-and-style/", "/sport", "/entertainment/", "obituary"],
         "sections": [
             {"title": "Kenya: business & finance", "feeds": [
                 ("Business Daily", "https://www.businessdailyafrica.com/service/rss/bd/1939132/feed.rss"),
@@ -69,6 +69,16 @@ SITE = {
                 ("The Standard", "https://www.standardmedia.co.ke/rss/politics.php"),
                 ("Daily Nation", "https://nation.africa/kenya/rss.xml"),
                 ("Capital FM", "https://www.capitalfm.co.ke/news/feed/"),
+            ]},
+            {"title": "Africa: business & finance", "feeds": [
+                ("African Business", "https://african.business/feed"),
+                ("Business Insider Africa", "https://africa.businessinsider.com/rss"),
+                ("The Africa Report", "https://www.theafricareport.com/feed/"),
+            ]},
+            {"title": "Africa: politics & geopolitics", "feeds": [
+                ("BBC Africa", "https://feeds.bbci.co.uk/news/world/africa/rss.xml"),
+                ("France 24", "https://www.france24.com/en/africa/rss"),
+                ("The Guardian", "https://www.theguardian.com/world/africa/rss"),
             ]},
             {"title": "World: business & finance", "feeds": [
                 ("Financial Times", "https://www.ft.com/global-economy?format=rss"),
@@ -91,6 +101,7 @@ SITE = {
         ("About", "/"),
         ("Résumé", "/resume/"),
         ("Essays", "/essays/"),
+        ("In the News", "/news/"),
         ("More", "/more/"),
     ],
 }

@@ -125,6 +125,7 @@ def fetch_feed(source, url):
         summary = re.sub(r"<[^>]+>", " ", summary)
         summary = re.sub(r"\s+", " ", html.unescape(summary)).strip()
         summary = re.sub(r"^[A-Z][A-Za-z ,]+, \w{3} \d{1,2} [–-] ", "", summary)  # "NAIROBI, Kenya, Oct 24 – "
+        summary = re.sub(r"^\[[^\]]+\] (?:[A-Z][\w ,]+ -- )?", "", summary)  # allAfrica: "[Capital FM] Nairobi -- "
         stories.append({
             "source": source,
             "title": title,
@@ -159,7 +160,7 @@ def fetch_news(settings):
     per_section = settings.get("per_section", 6)
     per_source = settings.get("per_source", 2)
 
-    sections = []
+    sections, shown = [], []  # shown: every story picked so far, so no story appears in two sections
     for section in settings["sections"]:
         candidates = [st for (s, _), res in zip(feeds, results) if s is section for st in res]
         candidates.sort(key=lambda st: st["when"], reverse=True)
@@ -167,15 +168,17 @@ def fetch_news(settings):
         for st in candidates:
             if (st["when"] < cutoff or count.get(st["source"], 0) >= per_source
                     or any(s in st["link"] for s in skip)
-                    or any(same_story(st["title"], p["title"]) for p in picked)):
+                    or any(same_story(st["title"], p["title"]) for p in shown)):
                 continue
             count[st["source"]] = count.get(st["source"], 0) + 1
             st["summary"] = shorten(st["summary"])
             st["when"] = st["when"].astimezone(NAIROBI)
             picked.append(st)
+            shown.append(st)
             if len(picked) == per_section:
                 break
-        sections.append({"title": section["title"], "stories": picked})
+        anchor = re.sub(r"[^a-z0-9]+", "-", section["title"].lower()).strip("-")
+        sections.append({"title": section["title"], "id": anchor, "stories": picked})
 
     if not any(s["stories"] for s in sections):
         return None
