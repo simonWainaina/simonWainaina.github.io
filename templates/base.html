@@ -55,6 +55,38 @@
     </span>
   </footer>
 
+  <div class="scroll-buttons">
+    <button class="to-top" type="button" aria-label="Back to top" title="Back to top" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>
+    </button>
+    <button class="to-bottom" type="button" aria-label="Go to bottom" title="Go to bottom" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+  </div>
+
+  <script>
+    // Back to top / go to bottom: each button only shows when it's useful.
+    (function () {
+      var up = document.querySelector(".to-top");
+      var down = document.querySelector(".to-bottom");
+      var GAP = 400;
+      function update() {
+        var y = window.scrollY;
+        var end = document.documentElement.scrollHeight - window.innerHeight;
+        up.hidden = y < GAP;
+        down.hidden = end - y < GAP;
+      }
+      up.addEventListener("click", function () { window.scrollTo({ top: 0 }); });
+      down.addEventListener("click", function () {
+        window.scrollTo({ top: document.documentElement.scrollHeight });
+      });
+      window.addEventListener("scroll", update, { passive: true });
+      window.addEventListener("resize", update);
+      window.addEventListener("load", update);
+      update();
+    })();
+  </script>
+
   <script>
     document.querySelector(".theme-toggle").addEventListener("click", function () {
       var next = window.siteTheme() === "dark" ? "light" : "dark";
