@@ -57,7 +57,7 @@ SITE = {
         "Instagram": "https://www.instagram.com/simon_wainaina1/",
         "Substack": "https://substack.com/@simonwainaina1",
         "Medium": "https://medium.com/@simonwainaina810",
-        "GitHub": "https://github.com/simonWainaina",
+        "GitHub": "",       # https://github.com/simonWainaina
         "Email": "mailto:simonwainaina810@gmail.com",
     },
 
