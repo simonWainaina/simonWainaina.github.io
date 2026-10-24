@@ -2,7 +2,7 @@
 
 SITE = {
     "title": "Simon Wainaina",
-    "tagline": "Senior at Williams College in Williamstown, MA, USA. Interested in finance, economic research, geopolitics, and the small things in between.",
+    "tagline": "Senior at Williams College in Williamstown, MA, USA. Interested in finance, economics and economics research, politics, geopolitics, and the small things in between.",
     "author": "Simon Wainaina",
 
     # Profile picture shown on the home page. Put the image in static/

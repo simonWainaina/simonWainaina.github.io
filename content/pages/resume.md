@@ -15,7 +15,7 @@ Microsoft Excel, data analysis
 ### Private Credit Summer Analyst · 400 Capital Management LLC
 Jun 2025 – Aug 2025 · New York, NY
 
-Bloomberg Terminal, research
+Bloomberg Terminal, research, Market Research, Mirosoft Excel, Options Strategies
 
 ### Winter Research Intern · FCLTGlobal
 Jan 2025 – Feb 2025 · Boston, MA
@@ -35,7 +35,7 @@ Completed an 8-week intensive professional development program for Black undergr
 ### Nonprofit Consulting Extern, in collaboration with PwC · Extern
 Jun 2024 – Jul 2024 · Remote
 
-Consulting project for Kids First Chicago; earned the Non-Profit Certificate of Successful Completion.
+Did a consulting project for Kids First Chicago; earned a Non-Profit Certificate of Successful Completion.
 
 ### Intern · Cross World Africa Inc.
 May 2023 – Aug 2023 · Kenya
@@ -86,4 +86,4 @@ Python · MATLAB · Stata · Microsoft Excel · Bloomberg Terminal · Overleaf �
 
 ## Interests
 
-Chess · Badminton · Soccer · Politics and geopolitics
+Chess · Badminton · Soccer · Politics and geopolitics · Reading
