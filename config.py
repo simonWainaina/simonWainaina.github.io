@@ -44,6 +44,11 @@ SITE = {
     # method here (only the content="..." part). Leave "" until you have one.
     "google_site_verification": "Ssyp0wM5DKjF2680zxeeOLK-iXYGZ_EILnw-p2g0suY",
 
+    # Visitor statistics (GoatCounter, free). Sign up at goatcounter.com and
+    # put the code you chose here, e.g. "simonwainaina" for
+    # simonwainaina.goatcounter.com. Leave "" to turn statistics off.
+    "goatcounter": "",
+
     # Comments (Cusdis). Paste the App ID from your Cusdis dashboard.
     # Leave empty to hide the comment box.
     "cusdis_app_id": "",

@@ -61,7 +61,6 @@
     <span>&copy; {{ year }} {{ site.author }}</span>
     <span class="footer-links">
       {% for label, href in social.items() %}<a href="{{ href }}">{{ label }}</a>{% endfor %}
-      <a href="{{ url('/feed.xml') }}">RSS</a>
     </span>
   </footer>
 
@@ -105,5 +104,8 @@
       if (window.CUSDIS && window.CUSDIS.setTheme) window.CUSDIS.setTheme(next);
     });
   </script>
+  {% if site.goatcounter %}
+  <script data-goatcounter="https://{{ site.goatcounter }}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  {% endif %}
 </body>
 </html>
